@@ -1,12 +1,15 @@
-# Clase 5 · Reto — El campo colombiano en tres variables
+# Clase 5 · Reto — El campo colombiano, variable por variable
 
 ## De qué se trata
 
 En el demo aplicó el marco univariado de 5 pasos a una variable de consumo de agua, con el profesor
-al lado. Aquí hay 20.000 registros de producción agrícola de todo el país, y el marco se aplica tres
-veces: la primera a mano, paso por paso; las otras dos con una función que ya está escrita.
+al lado. Mirar una variable sola, con su centro, su dispersión, su forma y sus outliers, es
+**análisis univariado**: es la mitad del EDA que el Momento 1 pide, y la otra mitad —relacionar dos
+variables— es la clase 6. Aquí hay 20.000 registros de producción agrícola de todo el país, y se
+aplica el marco tres veces: la primera a mano, paso por paso, y las otras dos con una función ya
+escrita. Al final, dos preguntas que se responden comparando entre grupos.
 
-Su trabajo: resolver **diez tareas**, y escribir qué significa cada número que sale.
+Su trabajo: resolver **siete tareas**, y escribir qué significa cada número que sale.
 
 | Campo | Valor |
 |-------|-------|
@@ -16,14 +19,14 @@ Su trabajo: resolver **diez tareas**, y escribir qué significa cada número que
 | Tamaño | 20.000 filas x 17 columnas |
 | Fuente | Evaluaciones Agropecuarias Municipales (EVA), Ministerio de Agricultura, vía datos.gov.co |
 | Tiempo en el salón | 60 minutos |
-| Se termina | En casa (partes 5 y 6, la tabla resumen y la reflexión) |
+| Se termina | En casa (la tabla resumen, la validación y la reflexión) |
 | Trabajo | Individual o en pareja |
 | Entrega | El cuaderno completado, corriendo de arriba a abajo sin errores |
 
 ## Cómo está armado el cuaderno
 
 Este reto se recorre solo, leyendo. Nadie dicta los pasos desde el tablero: el profesor circula por
-el salón resolviendo dudas. Cada una de las diez tareas trae, en este orden:
+el salón resolviendo dudas. Cada una de las siete tareas trae, en este orden:
 
 | Parte | Qué contiene |
 |-------|--------------|
@@ -36,8 +39,8 @@ el salón resolviendo dudas. Cada una de las diez tareas trae, en este orden:
 
 **Por qué esto sigue siendo un reto.** Le damos el camino, pero el camino lo recorre usted sobre un
 dataset que no vio en el demo: elige la columna, elige la operación, **clasifica la forma de la
-distribución** y **decide qué hacer con los outliers**. Las dos últimas no las resuelve ninguna
-función. La técnica se guía; el criterio no, y el criterio es lo que se evalúa. Las celdas
+distribución**, **decide qué hacer con los outliers** y **arma solo la secuencia de la última
+tarea**. Esas tres no las resuelve ninguna función. La técnica se guía; el criterio no, y el criterio es lo que se evalúa. Las celdas
 `comprobar(...)` comparan una huella digital de su resultado con la esperada: nunca revelan la
 respuesta, y escribir cualquier cosa hasta que pasen es engañarse en el propio entregable.
 
@@ -51,11 +54,13 @@ los pasos numerados son el plan— y le deja los dos que se evalúan:
 |-------|-------------------------|
 | **Especificar** | La parte 6 llega en español y sin respuesta. Antes de teclear: qué tabla quiere, con qué columnas, ordenada por qué. Eso es un criterio de aceptación, y sin él la tarea solo se puede terminar, no validar |
 | **Planear** | Ahí mismo: los comandos están listados, la secuencia no. El plan es esa secuencia, con lo que hay que mirar en cada paso |
-| **Ejecutar** | Un paso, su salida impresa, y parar. Diez tareas de un tirón es lo que esa skill existe para impedir |
-| **Validar** | Las cuatro preguntas del analista sobre la tabla resumen. **Diez comprobaciones en verde no son una validación**: dicen que el número coincide, no que la lectura sea correcta |
+| **Ejecutar** | Un paso, su salida impresa, y parar. Siete tareas de un tirón es lo que esa skill existe para impedir |
+| **Validar** | Las cuatro preguntas del analista sobre la tabla resumen. **Siete comprobaciones en verde no son una validación**: dicen que el número coincide, no que la lectura sea correcta |
 
 Pedirle a una IA el análisis completo es legítimo y así quedó dicho en la clase 3. Lo que no se puede
-pedir prestado es la lectura, y la entrega pide tres frases **sin ningún número**.
+pedir prestado es la lectura, y la entrega pide frases **sin ningún número**. Fíjese en lo que un
+modelo no puede saber de este archivo: que `c_d_dep` y `c_d_mun` son códigos y no cantidades. Un
+agente le va a reportar ese r = 1,00 como el hallazgo estrella.
 
 ---
 
@@ -100,66 +105,64 @@ Empocaldas.
 
 ## Las tareas
 
-### Paso 0 · Cargar y reconocer (5 min)
+### Paso 0 · Cargar y reconocer
 
 Las celdas ya están escritas. Ejecútelas y **deje la salida a la vista**: de ahí va a copiar los
 nombres exactos de columnas, grupos y ciclos.
 
-### Parte 1 · Paso 1 del marco: identificar (5 min)
+### Parte 1 · Paso 1 del marco: identificar
 
-Objetivo: mirar la variable antes de calcular nada sobre ella.
+Objetivo: mirar la variable antes de calcular nada sobre ella. **No tiene tarea**: la celda de los
+faltantes viene resuelta, porque la clase 4 fue entera sobre eso. Se ejecuta, se lee la salida y se
+escribe una frase: por qué falta rendimiento y no las otras dos.
 
-1. **Los faltantes.** ¿Cuál de las tres variables tiene valores faltantes y cuántos? Y una frase: por
-   qué esa y no las otras dos.
-
-### Parte 2 · Pasos 2 y 3 sobre `producci_n_t` (15 min)
+### Parte 2 · Pasos 2 y 3 sobre `producci_n_t`
 
 Objetivo: centro y dispersión, calculados a mano una vez.
 
-2. **El centro.** Media, mediana y moda de la producción, y la razón media/mediana.
-3. **La dispersión.** Q1, Q3, desviación estándar y el IQR.
+1. **El centro.** Media, mediana y moda de la producción, y la razón media/mediana.
+2. **La dispersión.** Q1, Q3, desviación estándar y el IQR.
 
-### Parte 3 · Pasos 4 y 5 sobre `producci_n_t` (15 min)
+### Parte 3 · Pasos 4 y 5 sobre `producci_n_t`
 
 Objetivo: las dos partes del marco donde ninguna función responde por usted.
 
 Antes de las tareas hay una celda de acción sin comprobación: el histograma y el boxplot de la
 variable, con título y los dos ejes etiquetados.
 
-4. **La forma.** Clasificar la distribución: normal, sesgada a la derecha, sesgada a la izquierda o
-   bimodal. Una sola palabra, y tiene que ser coherente con la razón de la tarea 2.
-5. **Los outliers.** Los dos límites de la regla 1.5xIQR y el conteo de registros marcados. Después,
+3. **La forma.** Clasificar la distribución: normal, sesgada a la derecha, sesgada a la izquierda o
+   bimodal. Una sola palabra, y tiene que ser coherente con la razón de la tarea 1.
+4. **Los outliers.** Los dos límites de la regla 1.5xIQR y el conteo de registros marcados. Después,
    con la tabla de los diez mayores a la vista, la decisión argumentada: ¿se conservan?
 
-### Parte 4 · Las otras dos variables, con la función ya escrita (10 min)
+### Parte 4 · Las otras dos variables, con la función ya escrita
 
 Objetivo: reconocer que es el mismo procedimiento, y compararlas.
 
-6. **`rea_sembrada_ha`**, el área sembrada.
-7. **`rendimiento_t_ha`**, el rendimiento. Es un **cociente**, y ahí está el punto de la parte: la
-   razón media/mediana cae muchísimo respecto a las otras dos. Hay que explicar por qué, y mirar los
-   seis rendimientos más altos antes de decidir si se conservan.
+5. **`rea_sembrada_ha` y `rendimiento_t_ha`**, de un golpe. El rendimiento es un **cociente**, y ahí
+   está el punto de la parte: su razón media/mediana cae muchísimo respecto a las otras dos. Hay que
+   explicar por qué, y mirar los seis rendimientos más altos antes de decidir si se conservan.
 
-### Parte 5 · GroupBy (10 min en clase, se termina en casa)
+### Parte 5 · GroupBy
 
 Objetivo: pasar de un número único a la comparación entre grupos. Las tres decisiones de los M&Ms.
 
-8. **Producción media por grupo de cultivo.** Cuál encabeza, y por qué FLORES Y FOLLAJES queda a
+6. **Producción media por grupo de cultivo.** Cuál encabeza, y por qué FLORES Y FOLLAJES queda a
    mitad de tabla pese a ser un renglón exportador clave.
-9. **Rendimiento mediano por ciclo de cultivo.** Mediana y no media, y hay que saber decir por qué.
 
-### Parte 6 · Una pregunta que usted arma sola (en casa)
+### Parte 6 · Una pregunta que usted arma sola
 
 Objetivo: el ensamblaje. El cuaderno lista todos los comandos que entran en juego, pero **no el
 orden**. Es deliberado: en los momentos evaluativos nadie le va a dar la secuencia.
 
-10. **Los grandes productores, ¿son los más eficientes?** Entre los 5 departamentos con mayor
-    producción total, cuál tiene el rendimiento mediano más alto.
+7. **Los grandes productores, ¿son los más eficientes?** Entre los 5 departamentos con mayor
+   producción total, cuál tiene el rendimiento mediano más alto.
 
 ### Cierre (en casa)
 
-- **La tabla resumen:** las tres variables en una sola vista, más una frase por variable **sin ningún
-  número**.
+- **La tabla resumen:** las tres variables una por una, con su centro, su forma, sus outliers y la
+  medida recomendada. Más una frase por variable **sin ningún número**, de las que se pueden decir en
+  voz alta en una reunión donde nadie ha visto el cuaderno.
 - **La validación:** las cuatro preguntas del analista sobre esa tabla, una frase cada una. Es la
   celda que separa "el cuaderno corrió" de "la lectura es correcta".
 - **Tres preguntas de reflexión**, una de ellas sobre el dataset del proyecto de su equipo.
@@ -176,24 +179,25 @@ lado a lado, y producción total por departamento en barras horizontales.
 1. Complete `reto.ipynb`.
 2. Antes de entregar: **Kernel → Restart and Run All**. Si algo revienta, arréglelo. Un cuaderno que
    no corre de arriba a abajo le pone techo a Hacer.
-3. Verifique que la tabla resumen, sus tres frases sin números y la validación de las cuatro
-   preguntas están escritas.
-4. Súbalo al aula virtual con el nombre `clase05_reto_APELLIDO.ipynb`.
-5. Fecha límite: antes del inicio de la clase 6.
+3. Verifique que la tabla resumen, sus frases sin números y la validación de las cuatro preguntas
+   están escritas.
+4. Verifique que cada decisión sobre outliers está **argumentada**, no solo tomada.
+5. Súbalo al aula virtual con el nombre `clase05_reto_APELLIDO.ipynb`.
+6. Fecha límite: antes del inicio de la clase 6.
 
 ## Cómo se valora
 
 **Este reto no produce nota ni cumplido / no cumplido.** Es práctica. La retroalimentación usa el
 mismo instrumento de los momentos evaluativos —**Saber, Ser y Hacer, una banda por dimensión**:
 Excelente, Bueno, Aceptable, Insuficiente, No aceptable— para que llegue familiarizado a las clases
-6, 11 y 14. **Las tres dimensiones pesan lo mismo** y los elementos de cada fila **no tienen peso**:
+evaluativas de los tres momentos. **Las tres dimensiones pesan lo mismo** y los elementos de cada fila **no tienen peso**:
 no se suman ni se promedian, alimentan una sola banda por dimensión.
 
 | Dimensión | Qué se mira en este reto |
 |-----------|--------------------------|
-| **Saber** | Las frases de interpretación: qué significa cada número. La razón media/mediana traducida a una frase sobre el campo colombiano, la comparación de las tres razones en la tarea 7, y la tabla resumen con sus tres frases sin números |
-| **Ser** | La decisión sobre los outliers **argumentada** en lugar de aplicada por defecto, sobre todo el contraste entre la tarea 5 (caña azucarera: se conservan) y la 7 (rendimientos de tomate: se marcan y se consultan), y las tres preguntas de reflexión |
-| **Hacer** | Las diez tareas con el resultado correcto (el punto de control final las cuenta), la parte 6 armada por usted, los gráficos con título y ejes etiquetados, y el cuaderno corriendo completo con Restart & Run All |
+| **Saber** | Las frases de interpretación: qué significa cada número. La razón media/mediana traducida a una frase sobre el campo colombiano, la comparación de las tres razones en la tarea 5, y la tabla resumen con sus frases sin números |
+| **Ser** | La decisión sobre los outliers **argumentada** en lugar de aplicada por defecto, sobre todo el contraste entre la tarea 4 (caña azucarera: se conservan) y la 5 (rendimientos de tomate: se marcan y se consultan); y las tres preguntas de reflexión |
+| **Hacer** | Las siete tareas con el resultado correcto (el punto de control final las cuenta), la tarea 7 armada por usted, los gráficos con título y ejes etiquetados, y el cuaderno corriendo completo con Restart & Run All |
 
 **Topes por omisión** (techo a la banda, nunca resta, y no se acumulan):
 
@@ -201,6 +205,9 @@ no se suman ni se promedian, alimentan una sola banda por dimensión.
   número no es el análisis; la frase que lo explica sí.
 - El cuaderno no corre con Restart & Run All: **Hacer** no pasa de Aceptable.
 - Gráficos sin título o sin etiquetas de eje: **Hacer** no pasa de Bueno.
+- Una frase que afirme que una variable **causa** otra apoyándose en una diferencia entre grupos:
+  **Saber** no pasa de Insuficiente. Que un grupo rinda más no explica por qué. Es la frontera más
+  dura del Momento 1 y no se negocia.
 
 ## Si se atasca
 
@@ -211,13 +218,14 @@ no se suman ni se promedian, alimentan una sola banda por dimensión.
 | El histograma de `producci_n_t` sale como una sola barra | Es el resultado correcto: el sesgo es tan fuerte que todo se apila contra el cero. Es un hallazgo, no un fallo |
 | `.quantile(25)` da un número absurdo y no da error | Recibe una fracción entre 0 y 1: `0.25`, no `25` |
 | `TypeError` al combinar dos condiciones | Faltan paréntesis. Cada condición entre paréntesis, sin excepción |
-| La tarea 6 o la 7 dicen "sigue valiendo None" | Llamó la función pero no guardó lo que devuelve en una variable |
+| La tarea 5 dice "sigue valiendo None" | Llamó la función pero no guardó lo que devuelve en una variable |
 
 ## Enlaces
 
 - El `demo.ipynb` de esta misma clase tiene el marco de 5 pasos completo sobre otro dataset, con
-  los recuadros que explican qué es una media, qué mide la desviación estándar y qué es un objeto
-  agrupado. Úselo de referencia.
+  los recuadros que explican qué es una media, qué mide la desviación estándar, qué es un objeto
+  agrupado y por qué la mediana resiste lo que la media no. Su sección 7 recorre el marco de 5 pasos
+  completo de principio a fin: es el modelo de la tabla resumen de este reto. Úselo de referencia.
 - Guía de entrega del Momento 1 y qué hace que un dataset sirva:
   `evaluaciones/momento1/guia_entrega.md`, sección 3. Fuente única: los criterios no se duplican aquí.
 - Fuente del dataset: https://www.datos.gov.co/resource/2pnw-mmge

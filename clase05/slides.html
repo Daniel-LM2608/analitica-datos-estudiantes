@@ -330,6 +330,26 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
    El bloque de código pasa de fondo oscuro a fondo claro: en papel, negro
    sólido es tóner y es ilegible.
    ========================================================================= */
+/* ---- Invariante 6 · piso de 22px reales para el TEXTO DE CONTENIDO ----
+   El piso no lo cumple solo `body`: lo cumple todo lo que el estudiante lee
+   como frase o como dato desde la ultima fila. Celdas de tabla (cuerpo y
+   encabezado), texto de tarjeta y de columna, listas, notas, citas y terminos
+   en linea entran aqui. Los rotulos de interfaz —kicker, pie institucional,
+   `caption`, chips, indice— tienen su propio piso, mas bajo y argumentado, en
+   design/CONTRATO.md. `max()` respeta el tamano original cuando ya es mayor,
+   y el bloque vive bajo `min-width:1200px` igual que el de `body`: por debajo
+   de esa marca el deck ya no esta en un proyector. */
+@media (min-width:1200px){
+  caption{font-size:max(22px,var(--fs-micro))}
+  table{font-size:max(22px,clamp(.72rem,1.08vw,1rem))}
+  thead th{font-size:max(22px,.86em)}
+  tbody th .mono,td .mono{font-size:max(22px,.92em)}
+  td.num{font-size:max(22px,.92em)}
+  .term{font-size:max(22px,.88em)}
+  .card p{font-size:max(22px,clamp(.76rem,1.12vw,1.02rem))}
+  .figures .l{font-size:max(22px,var(--fs-micro))}
+}
+
 @media print{
   @page{size:landscape;margin:0}
   :root{--bg:#fff;--surface:#fff;--surface-2:#f1ede3;--line:#c9c9c9;
@@ -402,15 +422,35 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
 <section class="slide divider" data-block="1" data-title="Divisoria · Bloque 1">
   <span class="n">01</span>
   <p class="kicker">Bloque uno</p>
-  <h2>Teoría &middot; Ocho ideas y ninguna línea de código</h2>
+  <h2>Teoría &middot; Seis ideas y ninguna línea de código</h2>
   <p>El bloque más denso del semestre, y el más barato de entender: todo se explica con analogías y dibujos. Si esto queda claro, el resto del día es teclear.</p>
 </section>
 
 <section class="slide" data-block="1" data-title="Hook: las dos frases que no se contradicen">
   <span class="numeral">?</span>
-  <p class="kicker reveal">Las dos salen del mismo archivo, el que abrimos en el bloque 2</p>
+  <p class="kicker reveal">Dos frases del mismo archivo de Empocaldas</p>
   <p class="claim reveal">El consumo promedio es de <span>5.140 m3</span> por registro.<br>La mitad de los registros consume menos de <span class="b">501 m3</span>.</p>
-  <p class="lead reveal">¿Cuál de las dos miente? Ninguna. Las dos son ciertas, las dos salen del mismo dataset de Empocaldas y difieren diez veces. Esa diferencia es la clase de hoy.</p>
+  <p class="lead reveal">¿Cuál de las dos miente? <strong>Ninguna.</strong> Las dos son ciertas, salen del mismo archivo y difieren diez veces. Esa diferencia es la clase de hoy.</p>
+</section>
+
+<section class="slide" data-block="1" data-title="Por qué difieren: seis filas reales">
+  <p class="kicker reveal">La respuesta esta en los datos &middot; seis filas reales</p>
+  <h2 class="reveal">Filas en cero al lado de filas de 160.000</h2>
+<div class="table-wrap reveal">
+    <table>
+      <caption>HISTORICO_CONSUMO.csv &middot; 5.477 de las 21.816 filas consumen cero (25,1%), y el máximo es 164.863 m3</caption>
+      <thead><tr><th scope="col">Municipio</th><th scope="col">Estrato</th><th scope="col">Suscriptores</th><th scope="col">Consumo (m3)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Ansermá</th><td>Estrato 6</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><th scope="row">Belálcazar</th><td>Estrato 6</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><th scope="row">Arma</th><td>Industrial</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr class="alt"><th scope="row">La Dorada</th><td>Estrato 2</td><td class="num">9.302</td><td class="num">158.647</td></tr>
+        <tr class="alt"><th scope="row">La Dorada</th><td>Estrato 2</td><td class="num">9.275</td><td class="num">160.069</td></tr>
+        <tr class="alt"><th scope="row">La Dorada</th><td>Estrato 2</td><td class="num">9.258</td><td class="num">164.863</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lead reveal">Esa convivencia es la que arrastra la media hasta 5.140 y deja la mediana clavada en 501. <strong>La media siente cada extremo; la mediana solo cuenta posiciones.</strong></p>
 </section>
 
 <section class="slide" data-block="1" data-title="Dónde vamos: tercera de tres">
@@ -421,10 +461,10 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <p>Entender y limpiar y organizar, los dos primeros verbos del EDA, ya están hechos. Hasta hoy no se podía calcular nada sin arriesgarse a calcularlo sobre basura. <b>Hoy por fin se puede contar algo.</b></p></article>
     <article class="card mediana"><span class="k">Qué se rompe si no</span><h3>Cruzar a ciegas es adivinar</h3>
       <p>Quien salta directo a relacionar dos columnas sin saber qué dice cada una <b>no puede distinguir un hallazgo de un artefacto</b>: ni sabe qué es un valor normal ahí, ni qué está fuera de rango.</p></article>
-    <article class="card media"><span class="k">Qué habilita</span><h3>Relacionar, la otra mitad del EDA</h3>
-      <p>La media, la dispersión y los outliers de hoy son <b>el lenguaje con el que se lee un cruce</b> cuando se pase a relacionar variables. Y son la mitad del análisis que se entrega en la clase 6.</p></article>
+    <article class="card media"><span class="k">Qué habilita</span><h3>Relacionar, y llega en la clase 6</h3>
+      <p>La media, la dispersión y los outliers de hoy son <b>el lenguaje con el que se lee un cruce</b>, y el cruce entre dos variables llega en la <strong>clase 6</strong>: dispersión, coeficiente y causalidad. <b>Con eso queda completo el análisis que se entrega en la clase 7.</b></p></article>
   </div>
-  <p class="lead reveal">El título de hoy dice <b>EDA</b> y el del análisis bivariado también: no es que empiece hoy, <strong>el EDA empezó en la clase 2</strong> y hoy va por su tercer verbo. Y ninguna de las medidas de hoy explica por qué pasó algo: esa distinción es la que se defiende en la sustentación.</p>
+  <p class="lead reveal">El EDA no empieza hoy: <strong>empezó en la clase 2</strong>, se limpió y se organizó en la <strong>clase&nbsp;4</strong>, y hoy recorre su tercer verbo, una variable a la vez. La clase 6 lo completa de a dos. Y ninguna de las medidas de hoy explica <b>por qué</b> pasó algo: esa distinción es la que se defiende en la sustentación.</p>
 </section>
 
 <section class="slide" data-block="1" data-title="Población y muestra: la sopa">
@@ -434,7 +474,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
     <article class="card"><span class="k">Revolver</span><h3>Muestreo aleatorio</h3>
       <p>Cada elemento de la olla tiene la misma oportunidad de caer en la cuchara. <b>Sin revolver, la cucharada de la superficie no representa nada.</b></p></article>
     <article class="card media"><span class="k">No revolver</span><h3>Sesgo de selección</h3>
-      <p>Una encuesta telefónica a líneas fijas no representa a los universitarios de 2026. El método decidió la respuesta antes de preguntar.</p></article>
+      <p>Una encuesta telefónica a líneas fijas no representa a los universitarios de 2026. El método decidió la respuesta antes de preguntar. <b>Este es el sesgo de la muestra.</b> Más adelante aparece el sesgo de una distribución, que es su forma torcida: misma palabra, cosas distintas.</p></article>
     <article class="card"><span class="k">Tamaño</span><h3>Cuchara más grande</h3>
       <p>Más confianza, sí. Pero una muestra pequeña bien tomada dice muchísimo más que una grande mal tomada.</p></article>
   </div>
@@ -443,6 +483,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
 <section class="slide" data-block="1" data-title="¿Población o muestra? La pregunta manda">
   <p class="kicker reveal">Pregunta al aula &middot; respondan en voz alta</p>
   <h2 class="reveal">El archivo de hoy tiene 21.816 filas. ¿Es población o muestra?</h2>
+  <p class="lead reveal">Una fila es una combinación municipio-estrato-mes de Empocaldas: <span class="mono">La Dorada, Estrato 2, agosto de 2015, 9.302 suscriptores, 158.647 m3</span>. Doce columnas así, 21.816 veces, entre 2015 y 2023.</p>
   <div class="cards c2 reveal">
     <article class="card mediana"><span class="k">Es población</span><h3>Si la pregunta es sobre Empocaldas</h3>
       <p>Son <b>todos</b> los registros mensuales de la empresa entre 2015 y 2023. No falta ninguno: no hay nada que inferir.</p></article>
@@ -467,7 +508,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       </tbody>
     </table>
   </div>
-  <p class="lead reveal">Si al gerente le duplican el sueldo a 600 millones, la media salta a 62,7 y la mediana no se mueve un peso. En el cuaderno de hoy van a ver esa cuenta corriendo.</p>
+  <p class="lead reveal">Si al gerente le duplican el sueldo a 600 millones, la media salta a 62,7 y la mediana no se mueve un peso. <b>Ese es el efecto completo</b>: un solo dato cambia, la media entera se mueve, la mediana no se entera.</p>
 </section>
 
 <section class="slide" data-block="1" data-title="Media y mediana: qué es cada una">
@@ -482,16 +523,16 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <line class="mark-a" x1="430" y1="66" x2="430" y2="336"></line>
       <text class="lab b" x="140" y="52">MEDIANA</text>
       <text class="lab a" x="448" y="52">MEDIA</text>
-      <text class="lab" x="640" y="286">la cola larga arrastra la media</text>
+      <text class="lab" text-anchor="end" x="960" y="276">la cola larga arrastra la media</text>
       <text class="lab" x="112" y="362">la mayoría de los datos</text>
-      <text class="lab" x="760" y="362">unos pocos enormes</text>
+      <text class="lab" text-anchor="end" x="940" y="362">unos pocos enormes</text>
     </svg>
   </div>
   <div class="cards c2 reveal">
     <article class="card media"><span class="k">Media</span><h3>Punto de equilibrio</h3>
-      <p>Cada dato empuja con <b>su magnitud</b>. Por eso un solo valor gigante la arrastra: pesa por lo que vale, no por ser uno.</p></article>
+      <p>Cada dato empuja con <b>su magnitud</b>, no por ser uno.</p></article>
     <article class="card mediana"><span class="k">Mediana</span><h3>Puesto en la fila</h3>
-      <p>Cada dato pesa <b>uno</b>, sea de 3 o de 300. Por eso resiste: el gerente sigue siendo una sola persona en la fila.</p></article>
+      <p>Cada dato pesa <b>uno</b>, sea de 3 o de 300.</p></article>
   </div>
 </section>
 
@@ -516,7 +557,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
   <p class="kicker reveal">Analogía tres &middot; la arquería</p>
   <h2 class="reveal">Misma distancia promedio al centro, distinta consistencia</h2>
   <div class="fig-wrap reveal">
-    <svg class="fig" viewBox="0 0 1000 360" role="img"
+    <svg class="fig" viewBox="0 0 1000 400" role="img"
          aria-label="Dos dianas. En la de la izquierda las flechas están apiñadas alrededor del centro; en la de la derecha están desparramadas por todo el blanco. Las dos tienen la misma distancia promedio al centro.">
       <circle class="ring" cx="250" cy="170" r="150"></circle>
       <circle class="ring" cx="250" cy="170" r="100"></circle>
@@ -527,8 +568,8 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <circle class="dot b" cx="228" cy="188" r="9"></circle>
       <circle class="dot b" cx="272" cy="152" r="9"></circle>
       <circle class="dot b" cx="244" cy="196" r="9"></circle>
-      <text class="lbl" x="150" y="350">Arquero A</text>
-      <text class="lab b" x="290" y="350">desviación estándar baja</text>
+      <text class="lbl" text-anchor="middle" x="250" y="352">Arquero A</text>
+      <text class="lab b" text-anchor="middle" x="250" y="386">desviación estándar baja</text>
 
       <circle class="ring" cx="720" cy="170" r="150"></circle>
       <circle class="ring" cx="720" cy="170" r="100"></circle>
@@ -539,11 +580,11 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <circle class="dot a" cx="596" cy="220" r="9"></circle>
       <circle class="dot a" cx="800" cy="252" r="9"></circle>
       <circle class="dot a" cx="742" cy="60" r="9"></circle>
-      <text class="lbl" x="620" y="350">Arquero B</text>
-      <text class="lab a" x="770" y="350">desviación estándar alta</text>
+      <text class="lbl" text-anchor="middle" x="720" y="352">Arquero B</text>
+      <text class="lab a" text-anchor="middle" x="720" y="386">desviación estándar alta</text>
     </svg>
   </div>
-  <p class="lead reveal">El promedio no los distingue: los dos aciertan igual de lejos del centro, en promedio. Lo que los distingue es <strong>qué tan regados están</strong>, y eso es lo que mide la desviación estándar.</p>
+  <p class="lead reveal">El promedio no los distingue: los dos aciertan igual de lejos del centro, en promedio. Lo que los distingue es <strong>qué tan regados están</strong>, y eso es lo que mide la desviación estándar: <strong>la distancia típica de un dato a la media</strong>.</p>
 </section>
 
 <section class="slide" data-block="1" data-title="De la varianza a la desviación estándar">
@@ -558,30 +599,6 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
   <div class="callout warn reveal"><p><strong>Por eso se reporta la desviación estándar y no la varianza.</strong> "La variabilidad es de 216 millones de metros cúbicos <b>al cuadrado</b>" no significa nada físico y nadie sabe qué hacer con eso. "La variabilidad es de 14.706 m3" sí se puede comparar con el consumo.</p></div>
 </section>
 
-<section class="slide" data-block="1" data-title="La regla 68-95-99.7">
-  <p class="kicker reveal">Qué significa la desviación estándar, en cantidad de datos</p>
-  <h2 class="reveal">68, 95 y 99,7</h2>
-  <div class="fig-wrap reveal">
-    <svg class="fig" viewBox="0 0 1000 300" role="img"
-         aria-label="Campana simétrica con tres franjas: entre menos una y más una desviación estándar cae el 68% de los datos, entre menos dos y más dos el 95%, y entre menos tres y más tres el 99,7%.">
-      <rect class="band2" x="268.9" y="60" width="422.2" height="180"></rect>
-      <rect class="band" x="374.4" y="60" width="211.2" height="180"></rect>
-      <polyline class="curve plain" points="100.0,239.7 125.6,239.4 151.2,238.6 176.9,237.2 202.5,234.5 228.1,229.8 253.7,222.4 279.3,211.3 304.9,195.7 330.6,175.7 356.2,152.0 381.8,126.4 407.4,101.7 433.0,81.4 458.7,68.4 484.3,65.0 509.9,71.7 535.5,87.5 561.1,109.6 586.7,135.0 612.4,160.2 638.0,182.9 663.6,201.4 689.2,215.4 714.8,225.3 740.4,231.7 766.1,235.5 791.7,237.8 817.3,238.9 842.9,239.5 860.0,239.7"></polyline>
-      <line class="axis" x1="90" y1="240" x2="900" y2="240"></line>
-      <line class="mark-a" x1="480" y1="55" x2="480" y2="252"></line>
-      <line class="mark-b" x1="374.4" y1="90" x2="374.4" y2="252"></line>
-      <line class="mark-b" x1="585.6" y1="90" x2="585.6" y2="252"></line>
-      <text class="lab a" x="440" y="42">MEDIA</text>
-      <text class="lab b" x="420" y="160">68%</text>
-      <text class="lab" x="300" y="120">95%</text>
-      <text class="lab" x="130" y="92">99,7%</text>
-      <text class="lab" x="100" y="270">tres desviaciones abajo</text>
-      <text class="lab" text-anchor="end" x="900" y="270">tres desviaciones arriba</text>
-    </svg>
-  </div>
-  <div class="callout warn reveal"><p><strong>Vale solo si la distribución es aproximadamente normal.</strong> Estaturas, sí. <b>El consumo de agua de hoy, no: ni de lejos.</b> Por eso hoy los outliers se detectan con cuartiles, que no suponen nada sobre la forma. La regla se retoma completa en la clase 12.</p></div>
-</section>
-
 <section class="slide" data-block="1" data-title="Percentiles: el ICFES">
   <p class="kicker reveal">Analogía cuatro &middot; el ICFES</p>
   <p class="quote reveal">Cuando les dieron el resultado del ICFES, el número que importaba no era el puntaje: era el percentil. Percentil 90 no significa que sacaron 90 sobre 100. Significa que quedaron por encima del 90% de los que presentaron.</p>
@@ -591,7 +608,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
     <article class="card mediana"><span class="k">Cómo se dice</span><h3>Traducirlo a una frase</h3>
       <p>"El percentil 90 del consumo es 12.260 m3" quiere decir: <b>nueve de cada diez registros consumen menos que eso</b>.</p></article>
   </div>
-  <p class="lead reveal">Un percentil siempre se puede decir en español. Si no logra decirlo en una frase, no lo entendió todavía.</p>
+  <p class="lead reveal">Un percentil siempre se puede decir en español. Si no logra decirlo en una frase, no lo entendió todavía. <strong>Y sirve para decidir dónde va un corte:</strong> qué cuenta como "consumo alto" en este archivo no lo decide una opinión, lo decide el percentil.</p>
 </section>
 
 <section class="slide" data-block="1" data-title="Cuartiles e IQR">
@@ -631,9 +648,9 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
 
 <section class="slide" data-block="1" data-title="GroupBy: los M&amp;Ms">
   <p class="kicker reveal">Analogía cinco &middot; los M&amp;Ms</p>
-  <h2 class="reveal">Separar, resumir, poner lado a lado</h2>
+  <h2 class="reveal">GroupBy: separar, resumir, poner lado a lado</h2>
   <div class="fig-wrap reveal">
-    <svg class="fig" viewBox="0 0 1000 330" role="img"
+    <svg class="fig" viewBox="0 0 1100 330" role="img"
          aria-label="Una pila revuelta de fichas de tres colores se separa en tres montoncitos por color; cada montoncito se cuenta; los tres conteos se ponen en una tabla de tres filas para compararlos.">
       <text class="lab" x="40" y="36">REVUELTO</text>
       <circle class="dot a" cx="70" cy="90" r="13"></circle>
@@ -653,33 +670,33 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <circle class="dot a" cx="316" cy="80" r="13"></circle>
       <circle class="dot a" cx="316" cy="112" r="13"></circle>
       <circle class="dot a" cx="316" cy="144" r="13"></circle>
-      <text class="lab b" x="400" y="36">GRUPO B</text>
-      <circle class="dot b" cx="416" cy="80" r="13"></circle>
-      <circle class="dot b" cx="416" cy="112" r="13"></circle>
-      <circle class="dot b" cx="416" cy="144" r="13"></circle>
-      <text class="lab" x="500" y="36">GRUPO C</text>
-      <circle class="dot" cx="516" cy="80" r="13"></circle>
-      <circle class="dot" cx="516" cy="112" r="13"></circle>
+      <text class="lab b" x="420" y="36">GRUPO B</text>
+      <circle class="dot b" cx="436" cy="80" r="13"></circle>
+      <circle class="dot b" cx="436" cy="112" r="13"></circle>
+      <circle class="dot b" cx="436" cy="144" r="13"></circle>
+      <text class="lab" x="540" y="36">GRUPO C</text>
+      <circle class="dot" cx="556" cy="80" r="13"></circle>
+      <circle class="dot" cx="556" cy="112" r="13"></circle>
 
-      <path class="arrow" d="M 580 140 L 640 140"></path>
-      <path class="arrowhead" d="M 640 131 L 662 140 L 640 149 Z"></path>
-      <text class="lab" x="562" y="112">APPLY</text>
+      <path class="arrow" d="M 640 140 L 700 140"></path>
+      <path class="arrowhead" d="M 700 131 L 722 140 L 700 149 Z"></path>
+      <text class="lab" x="622" y="112">APPLY</text>
 
-      <rect class="cell hd" x="690" y="60" width="150" height="46"></rect>
-      <rect class="cell hd" x="840" y="60" width="120" height="46"></rect>
-      <text class="t hd" x="704" y="90">GRUPO</text>
-      <text class="t hd" x="854" y="90">CUÁNTOS</text>
-      <rect class="cell" x="690" y="106" width="150" height="46"></rect>
-      <rect class="cell" x="840" y="106" width="120" height="46"></rect>
-      <text class="t" x="704" y="136">A</text><text class="t" x="854" y="136">3</text>
-      <rect class="cell" x="690" y="152" width="150" height="46"></rect>
-      <rect class="cell" x="840" y="152" width="120" height="46"></rect>
-      <text class="t" x="704" y="182">B</text><text class="t" x="854" y="182">3</text>
-      <rect class="cell" x="690" y="198" width="150" height="46"></rect>
-      <rect class="cell" x="840" y="198" width="120" height="46"></rect>
-      <text class="t" x="704" y="228">C</text><text class="t" x="854" y="228">2</text>
-      <text class="lab" x="690" y="278">COMBINE</text>
-      <text class="lab" x="40" y="300">Eso, exactamente eso, es lo que hace GroupBy por dentro.</text>
+      <rect class="cell hd" x="790" y="60" width="150" height="46"></rect>
+      <rect class="cell hd" x="940" y="60" width="120" height="46"></rect>
+      <text class="t hd" x="804" y="90">GRUPO</text>
+      <text class="t hd" x="954" y="90">CUÁNTOS</text>
+      <rect class="cell" x="790" y="106" width="150" height="46"></rect>
+      <rect class="cell" x="940" y="106" width="120" height="46"></rect>
+      <text class="t" x="804" y="136">A</text><text class="t" x="954" y="136">3</text>
+      <rect class="cell" x="790" y="152" width="150" height="46"></rect>
+      <rect class="cell" x="940" y="152" width="120" height="46"></rect>
+      <text class="t" x="804" y="182">B</text><text class="t" x="954" y="182">3</text>
+      <rect class="cell" x="790" y="198" width="150" height="46"></rect>
+      <rect class="cell" x="940" y="198" width="120" height="46"></rect>
+      <text class="t" x="804" y="228">C</text><text class="t" x="954" y="228">2</text>
+      <text class="lab" x="790" y="278">COMBINE</text>
+      <text class="lab" x="40" y="306">Eso, exactamente eso, es lo que hace GroupBy por dentro.</text>
     </svg>
   </div>
 </section>
@@ -702,7 +719,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
   <p class="kicker reveal">Lo que se lee en un histograma, antes de calcular nada</p>
   <h2 class="reveal">Cuatro formas, cuatro diagnósticos</h2>
   <div class="fig-wrap reveal">
-    <svg class="fig" viewBox="0 0 1000 240" role="img"
+    <svg class="fig" viewBox="0 0 1056 240" role="img"
          aria-label="Cuatro siluetas de distribución: normal simétrica, sesgada a la derecha con cola larga a la derecha, sesgada a la izquierda con cola larga a la izquierda, y bimodal con dos jorobas.">
       <g transform="translate(20,10)">
         <polyline class="curve plain" points="0.0,149.8 12.8,149.1 25.6,146.5 38.4,138.9 51.2,122.2 64.0,94.7 76.9,63.1 89.7,42.1 96.1,40.0 102.5,44.2 115.3,68.1 128.1,99.8 140.9,125.7 153.7,140.7 166.5,147.2 179.3,149.3 190.0,149.8"></polyline>
@@ -845,22 +862,22 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
 </section>
 
 <section class="slide" data-block="2" data-title="El recorrido, a nivel general">
-  <p class="kicker reveal">Lo que van a hacer en los próximos setenta y cinco minutos, sin desarrollarlo aquí</p>
-  <h2 class="reveal">El marco de cinco pasos, aplicado de punta a punta</h2>
+  <p class="kicker reveal">Lo que van a hacer en este bloque, sin desarrollarlo aquí</p>
+  <h2 class="reveal">El marco de cinco pasos, sobre datos reales</h2>
   <div class="table-wrap reveal">
     <table>
-      <caption>El cuaderno recorre el mismo marco del bloque 1, ahora sobre datos reales</caption>
+      <caption>El mismo marco del bloque 1, ahora sobre datos reales</caption>
       <thead><tr><th scope="col">Paso</th><th scope="col">Qué se hace</th><th scope="col">Qué pregunta contesta</th></tr></thead>
       <tbody>
         <tr><th scope="row">1. Identificar</th><td>Qué tipo de variable es cada columna</td><td>¿Se puede promediar esto?</td></tr>
         <tr><th scope="row">2. Resumir</th><td>Media, mediana, moda</td><td>¿Cuál es el valor típico?</td></tr>
         <tr><th scope="row">3. Dispersar</th><td>Desviación estándar, cuartiles, IQR</td><td>¿Qué tan parecidos son entre sí?</td></tr>
         <tr><th scope="row">4. Visualizar</th><td>Histograma y boxplot</td><td>¿Qué forma tiene la distribución?</td></tr>
-        <tr><th scope="row">5. Detectar</th><td>Outliers con la regla del IQR</td><td>¿Qué se salió de rango, y es real?</td></tr>
+        <tr class="on"><th scope="row">5. Detectar</th><td>Outliers con la regla del IQR</td><td>¿Qué se salió de rango, y es real?</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="callout reveal"><p><strong>Y en el medio hay un giro que no voy a adelantar:</strong> dos tablas correctas, calculadas sobre el mismo archivo, van a decir cosas que parecen contradecirse. Ninguna de las dos miente. Entender por qué es el punto entero del bloque, y por eso se descubre allá y no aquí.</p></div>
+  <div class="callout reveal"><p><strong>Hay un giro que no voy a adelantar:</strong> dos tablas correctas van a parecer contradecirse, y ninguna miente. <b>El paso 5 es el que el reto de hoy cobra.</b></p></div>
 </section>
 
 <section class="slide" data-block="2" data-title="Cómo se recorre el cuaderno">
@@ -924,17 +941,17 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
   <h2 class="reveal">Especificar, planear, ejecutar, validar &mdash; sobre tres variables</h2>
   <div class="table-wrap reveal">
     <table>
-      <caption>Las cuatro skills del catálogo, aterrizadas en las diez tareas</caption>
+      <caption>Las cuatro skills del catálogo, aterrizadas en las siete tareas</caption>
       <thead><tr><th scope="col">Tramo</th><th scope="col">Dónde pesa en este reto</th></tr></thead>
       <tbody>
         <tr><th scope="row">Especificar</th><td>La parte 6 llega escrita en español y sin respuesta. Antes de teclear: qué tabla quiere, con qué columnas, ordenada por qué. Eso es un criterio de aceptación</td></tr>
         <tr><th scope="row">Planear</th><td>Ahí mismo: los comandos están listados, la secuencia no. El plan es la secuencia, y cada paso con lo que hay que mirar para saber que salió</td></tr>
-        <tr class="alt"><th scope="row">Ejecutar</th><td>Un paso, su salida impresa, y parar. Diez tareas de un tirón es exactamente lo que esa skill existe para impedir</td></tr>
-        <tr class="on"><th scope="row">Validar</th><td>Las cuatro preguntas sobre la tabla resumen. <b>Diez comprobaciones en verde no son una validación:</b> dicen que el número coincide, no que la lectura sea correcta</td></tr>
+        <tr class="alt"><th scope="row">Ejecutar</th><td>Un paso, su salida impresa, y parar. Siete tareas de un tirón es exactamente lo que esa skill existe para impedir</td></tr>
+        <tr class="on"><th scope="row">Validar</th><td>Las cuatro preguntas sobre la tabla resumen. <b>Siete comprobaciones en verde no son una validación:</b> dicen que el número coincide, no que la lectura sea correcta</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="callout warn reveal"><p><strong>Si le pide el análisis completo a una IA, hágalo de frente:</strong> es una herramienta legítima y así quedó dicho en la clase 3. Lo que no se puede pedir prestado es la lectura. La entrega de hoy pide tres frases <b>sin ningún número</b>, y ahí se ve en dos segundos quién miró los datos.</p></div>
+  <div class="callout warn reveal"><p><strong>Si le pide el análisis completo a una IA, hágalo de frente:</strong> es una herramienta legítima y así quedó dicho en la clase 3. Lo que no se puede pedir prestado es la lectura. La entrega de hoy pide tres frases <b>sin ningún número</b>, y ahí se ve de inmediato quién miró los datos.</p></div>
 </section>
 
 <section class="slide" data-block="3" data-title="Las tareas: partes 1 a 3">
@@ -955,13 +972,13 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
   <h2 class="reveal">Las otras dos variables, los grupos y el ensamblaje</h2>
   <div class="cards c3 reveal">
     <article class="card"><span class="k">Parte 4</span><h3>Área y rendimiento</h3>
-      <p>Con la función ya escrita. El punto está en comparar las tres razones: <b>la del rendimiento cae muchísimo</b> porque es un cociente y normaliza por tamaño. Hay que explicar por qué.</p></article>
-    <article class="card"><span class="k">Parte 5</span><h3>Dos GroupBy</h3>
-      <p>Producción media por grupo de cultivo, y rendimiento <b>mediano</b> por ciclo. Mediana y no media, y hay que saber decir por qué.</p></article>
+      <p>Con la función ya escrita. Comparar las tres razones: <b>la del rendimiento cae muchísimo</b> porque es un cociente y normaliza por tamaño.</p></article>
+    <article class="card"><span class="k">Parte 5</span><h3>GroupBy</h3>
+      <p>Producción media por grupo de cultivo. Cuál encabeza, y <b>por qué FLORES Y FOLLAJES queda a mitad de tabla</b> pese a ser un renglón exportador clave.</p></article>
     <article class="card on"><span class="k">Parte 6</span><h3>Lo arma usted</h3>
-      <p>Entre los 5 departamentos de mayor producción, cuál tiene el mejor rendimiento mediano. <b>Los comandos están listados; el orden no.</b></p></article>
+      <p>Entre los 5 departamentos de mayor producción, cuál rinde mejor. <b>Los comandos están listados; el orden no.</b></p></article>
   </div>
-  <div class="callout warn reveal"><p><strong>Un contraste que vale toda la clase:</strong> la caña del Valle es un outlier que se conserva, pero los rendimientos de 240 toneladas por hectárea son <b>tomate en Antioquia sobre 3 hectáreas</b>, y los cinco siguientes también son tomate en Antioquia. Que se repita sugiere un problema de captura, no un dedazo: ahí la respuesta no es "se conserva", es "se marca y se consulta la fuente".</p></div>
+  <div class="callout warn reveal"><p><strong>Un contraste que vale toda la clase:</strong> la caña del Valle es un outlier que se conserva, pero los rendimientos de 240 toneladas por hectárea son <b>tomate en Antioquia sobre 3 hectáreas</b>, y los cinco siguientes también. Que se repita sugiere un problema de captura: ahí la respuesta no es "se conserva", es "se marca y se consulta la fuente".</p></div>
 </section>
 
 <section class="slide" data-block="3" data-title="Si se atasca">
@@ -996,7 +1013,7 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
       <p>Qué significa cada número: la razón traducida a una frase sobre el campo colombiano, la comparación de las tres razones y la tabla resumen con sus frases <b>sin ningún número</b>.</p></article>
     <article class="card mediana"><span class="k">Ser</span><h3>La decisión argumentada</h3>
       <p>Los outliers decididos, no aplicados por defecto: la caña que se conserva frente al tomate que se consulta. Y las tres preguntas de reflexión.</p></article>
-    <article class="card mediana"><span class="k">Hacer</span><h3>Las diez tareas y el cuaderno</h3>
+    <article class="card mediana"><span class="k">Hacer</span><h3>Las siete tareas y el cuaderno</h3>
       <p>El punto de control final las cuenta, la parte 6 armada por usted, los gráficos con título y ejes, y el cuaderno corriendo completo.</p></article>
   </div>
   <div class="callout warn reveal"><p><strong>Antes de entregar: Kernel &rarr; Restart and Run All.</strong> Si algo revienta, arréglelo. Un cuaderno que no corre de arriba a abajo le pone techo a Hacer, hoy y en las tres sustentaciones. <b>Este reto es práctica: no produce nota.</b> Se entrega antes del inicio de la clase 6.</p></div>
@@ -1005,8 +1022,8 @@ svg.fig .t.hd{fill:var(--muted);letter-spacing:.06em}
 <!-- ======================= CIERRE ======================= -->
 <section class="slide" data-title="Cierre">
   <p class="kicker reveal">Lo que sigue</p>
-  <p class="claim reveal">Hoy miramos <span class="b">una variable a la vez</span>.<br>Falta mirarlas <span>de a dos</span>.</p>
-  <p class="lead reveal">Falta la mitad del EDA: cómo se relacionan las variables entre sí, correlación, y por qué dos cosas que suben juntas no se causan la una a la otra. Con eso queda cerrado el contenido nuevo del Momento 1, y la entrega es en la clase 6.</p>
+  <p class="claim reveal">Hoy miramos <span class="b">una variable a la vez</span>,<br>y después <span>de a dos</span>.</p>
+  <p class="lead reveal">Termine el reto: es la práctica sobre la que se construye lo que sigue. <strong>La clase 6 relaciona dos variables a la vez</strong> (dispersión, coeficiente y causalidad) sobre los datos de su propio equipo, y <strong>la clase 7 es la evaluación del Momento 1.</strong></p>
 </section>
 
 </main>
